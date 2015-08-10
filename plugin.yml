@@ -1,0 +1,11 @@
+main: eu.weltensiedler.wtrade.Main
+name: Info
+version: 1.0
+author: CursedCookiie
+
+commands:
+
+  handel:
+    description: Money plugin
+    usage: /handel <give|take|set|pay> [name] [amount]
+    aliases: [trade]
