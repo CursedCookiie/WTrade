@@ -47,15 +47,15 @@ public class Main extends JavaPlugin implements Listener {
 
 				// Argumentenliste zu kurz. Anleitung soll an Sender ausgegeben
 				// werden
-				zeigeAnleitung(sender);
+				showHelp(sender);
 			} else if (args.length == 1 && args[0].equalsIgnoreCase(Messages.getString("Main.subCommandAbo"))) { //$NON-NLS-1$
 				if (!abos.contains(sender)) {
 					// Sender befindet sich noch nicht im Channel, wird
 					// eingetragen
-					abonniereHandel(sender);
+					subscribeChannel(sender);
 				} else {
 					// Sender befindet sich im Channel, wird ausgetragen
-					deabonniereHandel(sender);
+					unsubscribeChannel(sender);
 				}
 			} else if (args.length > 1 || (!args[0].equalsIgnoreCase(Messages.getString("Main.subCommandAbo")) && args.length == 1)) { //$NON-NLS-1$
 				if (abos.contains(sender) && abos.size()== 1) {
@@ -72,18 +72,18 @@ public class Main extends JavaPlugin implements Listener {
 		return true;
 	}
 
-	public boolean zeigeAnleitung(CommandSender sender) {
+	public boolean showHelp(CommandSender sender) {
 		sender.sendMessage(prefix
-				+ Messages.getString("Main.handelAnleitung")); //$NON-NLS-1$
+				+ Messages.getString("Main.showHelp")); //$NON-NLS-1$
 		return true;
 	}
 
-	public boolean abonniereHandel(CommandSender sender) {
+	public boolean subscribeChannel(CommandSender sender) {
 
-		sender.sendMessage(prefix + Messages.getString("Main.handelAbonniert")); //$NON-NLS-1$
+		sender.sendMessage(prefix + Messages.getString("Main.channelSubscribed")); //$NON-NLS-1$
 		for (Player k : abos) {
 			try {
-				k.sendMessage(prefix + Messages.getString("Main.gelb") + sender.getName() + Messages.getString("Main.handelBetreten")); //$NON-NLS-1$ //$NON-NLS-2$
+				k.sendMessage(prefix + Messages.getString("Main.yellow") + sender.getName() + Messages.getString("Main.channelJoined")); //$NON-NLS-1$ //$NON-NLS-2$
 			} catch (Exception ex) {
 				abos.remove(k);
 			}
@@ -92,12 +92,12 @@ public class Main extends JavaPlugin implements Listener {
 		return true;
 	}
 
-	public boolean deabonniereHandel(CommandSender sender) {
+	public boolean unsubscribeChannel(CommandSender sender) {
 		abos.remove(sender);
-		sender.sendMessage(prefix + Messages.getString("Main.handelNichtAbonniert")); //$NON-NLS-1$
+		sender.sendMessage(prefix + Messages.getString("Main.channelUnsubscribed")); //$NON-NLS-1$
 		for (CommandSender k : abos) {
 			try {
-				k.sendMessage(prefix + Messages.getString("Main.gelb") + sender.getName() + Messages.getString("Main.handelVerlassen")); //$NON-NLS-1$ //$NON-NLS-2$
+				k.sendMessage(prefix + Messages.getString("Main.yellow") + sender.getName() + Messages.getString("Main.channelLeft")); //$NON-NLS-1$ //$NON-NLS-2$
 			} catch (Exception ex) {
 				abos.remove(k);
 			}
@@ -106,19 +106,19 @@ public class Main extends JavaPlugin implements Listener {
 	}
 
 	public boolean sendNoUserInChannelMessage(CommandSender sender) {
-		sender.sendMessage(prefix + Messages.getString("Main.keineAbbonenten")); //$NON-NLS-1$
+		sender.sendMessage(prefix + Messages.getString("Main.noSubscribers")); //$NON-NLS-1$
 		return true;
 	}
 
 	public boolean sendNotInChannelMessage(CommandSender sender) {
 		sender.sendMessage(
-				prefix + Messages.getString("Main.nichtAbonniert")); //$NON-NLS-1$
+				prefix + Messages.getString("Main.notSubscribed")); //$NON-NLS-1$
 		return true;
 	}
 
 	public boolean sendMessage(String[] args, CommandSender sender) {
 
-		String message = Messages.getString("Main.gelb") + sender.getName() + Messages.getString("Main.resetKursiv"); //$NON-NLS-1$ //$NON-NLS-2$
+		String message = Messages.getString("Main.yellow") + sender.getName() + Messages.getString("Main.resetItalic"); //$NON-NLS-1$ //$NON-NLS-2$
 		for (String s : args) {
 			message += Messages.getString("Main.space") + s; //$NON-NLS-1$
 		}
